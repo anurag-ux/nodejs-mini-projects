@@ -6,10 +6,16 @@ This Repositary contains my mini-projects based on node.js and express.
 
 # Usage
 - Clone the repositary
-    `git clone https://github.com/anurag-ux/nodejs-mini-projects.git
+```
+    git clone https://github.com/anurag-ux/nodejs-mini-projects.git`
+```
 - go to the cloned folder and install the dependancies.
-    `cd nodejs-mini-projects
-    `npm install
+```
+    cd nodejs-mini-projects
+    npm install
+```
 - thats it! now you can run any project just by typing
-    `node {filename.js}
+```
+    node {filename.js}
+ ```
 # Enjoy!
