@@ -1,5 +1,2 @@
-fs=require("fs");
-
-//fs.writeFileSync("notes.txt","Hey there!!");
-
-fs.appendFileSync("notes.txt","\nI am anurag");
+const note=require("./notes.js");
+console.log(note());
