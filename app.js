@@ -1,10 +1,7 @@
-console.log("      ===================");
-console.log("      WELCOME TO MY SHOP!")
-console.log("      ===================");
+const chalk=require("chalk");
+const { captureRejectionSymbol } = require("events");
+const log=console.log;
 
-var faker=require("faker");
-for(var i=0;i<10;i++){
-    var name=faker.commerce.productName();
-    var email=faker.commerce.price();
-    console.log(name+" - $"+email);
-}
+log(chalk.keyword('orange')('Yay for orange colored text!'));
+log(chalk.rgb(123, 45, 67).underline('Underlined reddish color'));
+log(chalk.hex('#DEADED').bold('Bold gray!'));
