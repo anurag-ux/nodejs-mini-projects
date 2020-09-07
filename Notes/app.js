@@ -1,6 +1,6 @@
 const yargs=require("yargs");
 const chalk=require("chalk");
-const { string } = require("yargs");
+const notes=require("/home/anurag/Desktop/nodejs-mini-projects/Notes/notes.js");
 
 yargs.version('15.4.1');
 
@@ -21,7 +21,7 @@ yargs.command({
         }
     },
     handler:function(argv){
-        console.log("Title: "+argv.title+"\nBody: "+argv.body);
+        notes.addNote(argv.title,argv.body);
     }
 })
 
@@ -29,8 +29,15 @@ yargs.command({
 yargs.command({
     command:'remove',
     describe:"remove a note",
-    handler:function(){
-        console.log("Removing the note!")
+    builder:{
+        title:{
+            describe:"note title",
+            demandOption:true,
+            type:"string",
+        }
+    },
+    handler:function(argv){
+        notes.removeNote(argv.title);
     }
 })
 
@@ -53,4 +60,3 @@ yargs.command({
 })
 
 yargs.parse();
-//console.log(yargs.argv);
