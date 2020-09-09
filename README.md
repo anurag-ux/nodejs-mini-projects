@@ -16,6 +16,8 @@ This Repositary contains my mini-projects based on node.js and express.
 ```
 - thats it! now you can run any project just by typing
 ```
-    node {filename.js}
+    cd {project-name}
+    node app.js
  ```
 # Enjoy!
+
