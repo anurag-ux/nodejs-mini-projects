@@ -14,7 +14,7 @@ app.get("/",function(req,res){
 var name="";
 app.get("/view",function(req,res){
     res.render("star.ejs",{
-        name:name,
+        name:name
     })
 });
 
