@@ -1,40 +1,24 @@
-const express = require('express');
-const e = require('express');
+const express = require('express')
+const { static } = require('express')
 const app = express()
-const log=console.log;
 const port = 3000
 
+app.use(static("public"))
+
 app.get("/",function(req,res){
-    res.send("Hi welcome to my app!");
+    res.render("home.ejs"); 
+})
+
+app.get("/view/:name",function(req,res){
+    var name=req.params.name; 
+    res.render("star.ejs",{
+        name:name
+    })
 });
-
-app.get("/speak/:animal",function(req,res){
-    var animal=req.params.animal.toLowerCase();
-    var sound;
-    if(animal==="pig"){
-        sound="Oink";
-    }else if(animal==="cow"){
-        sound="Moo";
-    }else{
-        sound="Woof Woof!";
-    }
-    res.send("The "+animal+" says "+sound);
-})
-
-app.get("/repeat/:word/:number",function(req,res){
-    var word=req.params.word;
-    var n=parseInt(req.params.number);
-    var print="";
-    for(var i=0;i<n;i++){
-        print +=word+" ";
-    }
-    res.send(print);
-})
 
 app.get("*",function(req,res){
-    res.send("Sorry, page not found!");
+    res.send("<h1>Page Not Found</h1>")
 })
-
 app.listen(port,function(){
-    log("app running on server")
-});
+    console.log("Server running at http://localhost:"+port);
+})
