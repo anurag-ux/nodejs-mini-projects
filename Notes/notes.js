@@ -2,18 +2,14 @@ const fs=require("fs");
 const chalk=require("chalk");
 const { title } = require("process");
 
-const getNotes=function(){
-    return "Your notes...";
-}
-
 const addNote=(title,body) =>{
     const note=loadNotes();
 
-    const isDuplicate=note.filter(function(notes){
+    const isDuplicate=note.find((notes)=>{
         return notes.title===title;
     }) //check for existing titles
 
-    if(isDuplicate.length===0){
+    if(!isDuplicate){
         note.push({
             title:title,
             body:body
@@ -57,7 +53,7 @@ const readAll=() =>{
     var notes=loadNotes();
     var i=1;
     notes.forEach(note => {
-        console.log(chalk.yellow(i+". "+note.title+"\n"+note.body));
+        console.log(chalk.yellowBright("\n"+i+". "+note.title+"\n"+note.body));
         console.log("=================================");
         i++;
     });
@@ -83,7 +79,6 @@ const saveNotes=(note)=>{
 }
 
 module.exports={
-    getNotes:getNotes,
     addNote:addNote,
     removeNote:removeNote,
     readNote:readNote,
