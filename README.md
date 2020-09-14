@@ -14,10 +14,12 @@ This Repositary contains my mini-projects based on node.js and express.
     cd nodejs-mini-projects
     npm install
 ```
-- thats it! now you can run any project just by typing
+- thats it! now you can run any project and start the server
 ```
     cd {project-name}
     node app.js
  ```
+
+ -now go to the local<a href="http://localhost:3000/"> server and start exploring!
 # Enjoy!
 
