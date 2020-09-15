@@ -3,6 +3,8 @@
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
+
+
 .materialize-red {
   background-color: #e51c23 !important;
 }
@@ -7137,9 +7139,6 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::before {
 
 /* Select Field
    ========================================================================== */
-select {
-  display: none;
-}
 
 select.browser-default {
   display: block;

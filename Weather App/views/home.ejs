@@ -1,7 +1,17 @@
 <%- include ("layouts/header")%>
 
 <form action="/location" method="POST">
-    <input type="text" name="location" placeholder="Enter your location" required>
+    <h5>Zip Code:</h5> <input type="number" name="zip" placeholder="Enter your zipcode" required>
+    <br><br><br>
+    <h5>Choose your Country</h5>
+    <br>
+    <select id="country" name="country">
+        <option value="IN">India</option>
+        <option value="US">United States</option>
+        <option value="AU">Australia</option>
+        <option value="GB">Great Britain</option>
+    </select>
+    <br><br><br>
     <input type="submit">
 </form>
 

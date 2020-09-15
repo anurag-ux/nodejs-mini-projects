@@ -20,6 +20,6 @@ This Repositary contains my mini-projects based on node.js and express.
     node app.js
  ```
 
- -now go to the local<a href="http://localhost:3000/"> server and start exploring!
+ -now go to the local server at http://localhost:3000/ and start exploring!
 # Enjoy!
 

@@ -1,13 +1,15 @@
 const express = require('express')
 const { static } = require('express')
 const bodyParser = require('body-parser')
+const request=require('request');
 
 const app = express()
 const port = 3000
 
 app.use(static("public"))
 app.use(bodyParser.urlencoded({ extended: false }))
-var location=""
+var zip=0;
+var country="";
 
 app.get('/', function(req, res){
     res.render("home.ejs");
@@ -15,12 +17,14 @@ app.get('/', function(req, res){
 
 app.get('/weather',function(req,res){
     res.render("weather.ejs",{
-        location:location
+        zip:zip,
+        country:country
     })
 })
 
 app.post('/location',function(req,res){
-    location=req.body.location;
+    zip=req.body.zip;
+    country=req.body.country;
     res.redirect('/weather')
 })
 
