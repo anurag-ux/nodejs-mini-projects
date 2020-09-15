@@ -27,7 +27,7 @@ This Repositary contains my mini-projects based on node.js and express.
 # List of Projects
 
 - Notes App (Basic note-taking operations)
-- Weather App (Well Build Application which fetches data from various sources to display weather details)
+- <a href="https://still-plateau-18798.herokuapp.com/">Weather App</a> (Well Build Application which fetches data from various sources to display weather details. Also deployed on Heroku)
 <hr>
 # Enjoy!
 

@@ -26,12 +26,16 @@ app.get('/', function(req, res){
 app.get('/weather',function(req,res){
     request(pinUrl,(error,response)=>{
         data=JSON.parse(response.body);
-        city=data[0]["PostOffice"][0]["District"]+", "+data[0]["PostOffice"][0]["State"]
-        res.render("weather.ejs",{
-            weather:weather,
-            temp:temp,
-            city:city
-        })
+        if(data["cod"]=="404"){
+            res.redirect("/error");
+        }else{
+            city=data[0]["PostOffice"][0]["District"]+", "+data[0]["PostOffice"][0]["State"]
+            res.render("weather.ejs",{
+                weather:weather,
+                temp:temp,
+                city:city
+            })
+        }
     })
 })
 
@@ -42,10 +46,18 @@ app.post('/location',function(req,res){
     pinUrl=pin+zip;
     request(url,(error,response)=>{
         data=JSON.parse(response.body);
-        temp=(parseFloat(data["main"]["temp"])-273.15).toFixed(2);
-        weather=data["weather"][0]["main"];
-        res.redirect('/weather');
+        if(data["cod"]=="404"){
+            res.redirect("/error");
+        }else{
+            temp=(parseFloat(data["main"]["temp"])-273.15).toFixed(2);
+            weather=data["weather"][0]["main"];
+            res.redirect('/weather');
+        }
     });
+})
+
+app.get("/error",(req,res)=>{
+    res.render("error.ejs");
 })
 
 app.listen(port, () => console.log(`Server is running!`))
