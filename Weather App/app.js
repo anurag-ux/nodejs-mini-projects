@@ -50,7 +50,7 @@ app.post('/location',function(req,res){
             res.redirect("/error");
         }else{
             temp=(parseFloat(data["main"]["temp"])-273.15).toFixed(2);
-            weather=data["weather"][0]["main"];
+            weather=(data["weather"][0]["description"]);
             res.redirect('/weather');
         }
     });
