@@ -5,15 +5,14 @@ const request=require('request');
 
 const app = express()
 const port = 3000
-const base="http://api.openweathermap.org/data/2.5/weather?APPID=4ee4236d370e0116fe0e87f937f90445&zip="
-const pin ="https://api.postalpincode.in/pincode/"
+const location="https://api.weatherbit.io/v2.0/current?,IN&key=a87e76bd1d654e758325702ad0886d41&city=";
 
 app.use(static("public"))
 app.use(bodyParser.urlencoded({ extended: false }))
-var zip="";
+var city="";
 var country="";
 var url="";
-var pinUrl="";
+var loc="";
 var temp=0.0;
 var city="";
 var weather="";
@@ -24,33 +23,25 @@ app.get('/', (req, res)=>{
 })
 
 app.get('/weather',(req,res)=>{
-    request(pinUrl,(error,response)=>{
-        data=JSON.parse(response.body);
-        if(data["cod"]=="404"){
-            res.redirect("/error");
-        }else{
-            city=data[0]["PostOffice"][0]["District"]+", "+data[0]["PostOffice"][0]["State"]
-            res.render("weather.ejs",{
-                weather:weather,
-                temp:temp,
-                city:city
-            })
-        }
+    res.render("weather.ejs",{
+        weather:weather,
+        temp:temp,
+        city:city
     })
 })
 
 app.post('/location',(req,res)=>{
-    zip=req.body.zip;
+    city=req.body.city;
     country=req.body.country;
-    url=base+zip+","+country;
-    pinUrl=pin+zip;
-    request(url,(error,response)=>{
+    loc=location+city+','+country;
+    request(loc,(error,response)=>{
         data=JSON.parse(response.body);
-        if(data["cod"]=="404"){
+        if(data["error"]=="API key not valid, or not yet activated."){
             res.redirect("/error");
         }else{
-            temp=(parseFloat(data["main"]["temp"])-273.15).toFixed(2);
-            weather=(data["weather"][0]["description"]);
+            city=(data["data"][0]["city_name"]);
+            weather=(data["data"][0]["weather"]["description"]);
+            temp=(data["data"][0]["temp"]);
             res.redirect('/weather');
         }
     });
