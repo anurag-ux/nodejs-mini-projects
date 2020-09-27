@@ -31,7 +31,7 @@ app.get('/weather',(req,res)=>{
 })
 
 app.post('/location',(req,res)=>{
-    city=req.body.city;
+    city=req.body.city.toLowerCase();
     country=req.body.country;
     loc=location+city+','+country;
     request(loc,(error,response)=>{
