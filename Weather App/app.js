@@ -5,18 +5,16 @@ const request=require('request');
 
 const app = express()
 const port = 3000
-const location="https://api.weatherbit.io/v2.0/current?,IN&key=a87e76bd1d654e758325702ad0886d41&city=";
 
 app.use(static("public"))
 app.use(bodyParser.urlencoded({ extended: false }))
+
+var location="https://api.weatherbit.io/v2.0/current?,IN&key=a87e76bd1d654e758325702ad0886d41&city=";
 var city="";
 var country="";
-var url="";
-var loc="";
 var temp=0.0;
 var city="";
 var weather="";
-var data;
 
 app.get('/', (req, res)=>{
     res.render("home.ejs");
@@ -31,10 +29,11 @@ app.get('/weather',(req,res)=>{
 })
 
 app.post('/location',(req,res)=>{
-    city=req.body.city.toLowerCase();
-    country=req.body.country;
-    loc=location+city+','+country;
-    request(loc,(error,response)=>{
+    const body=req.body;
+    city=body.city.toLowerCase();f
+    country=body.country;
+    location=location+city+','+country;
+    request(location,(error,response)=>{
         data=JSON.parse(response.body);
         if(data["error"]=="API key not valid, or not yet activated."){
             res.redirect("/error");
