@@ -28,14 +28,13 @@ app.get('/weather',(req,res)=>{
     })
 })
 
-app.post('/location',(req,res)=>{
-    const body=req.body;
-    city=body.city.toLowerCase();f
-    country=body.country;
+app.post('/location',({body:responseBody},res)=>{
+    city=responseBody.city.toLowerCase();
+    country=responseBody.country;
     location=location+city+','+country;
-    request(location,(error,response)=>{
-        data=JSON.parse(response.body);
-        if(data["error"]=="API key not valid, or not yet activated."){
+    request(location,(error,{body})=>{
+        data=JSON.parse(body);
+        if(data["error"]!=undefined){
             res.redirect("/error");
         }else{
             city=(data["data"][0]["city_name"]);
