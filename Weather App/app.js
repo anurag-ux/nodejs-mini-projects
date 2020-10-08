@@ -6,8 +6,9 @@ const request=require('request');
 const app = express()
 const port = 3000
 
-app.use(static("public"))
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(static("public")) //for static css and js
+app.use(bodyParser.urlencoded({ extended: false })) //to parse body string
+app.set("view engine","ejs"); //for dynamic content
 
 var location="https://api.weatherbit.io/v2.0/current?,IN&key=a87e76bd1d654e758325702ad0886d41&city=";
 var city="";
@@ -17,11 +18,11 @@ var city="";
 var weather="";
 
 app.get('/', (req, res)=>{
-    res.render("home.ejs");
+    res.render("home");
 })
 
 app.get('/weather',(req,res)=>{
-    res.render("weather.ejs",{
+    res.render("weather",{
         weather:weather,
         temp:temp,
         city:city
@@ -46,7 +47,7 @@ app.post('/location',({body:responseBody},res)=>{
 })
 
 app.get("/error",(req,res)=>{
-    res.render("error.ejs");
+    res.render("error");
 })
 
 app.listen(port, () => console.log(`Server is running!`))
