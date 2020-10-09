@@ -1,15 +1,26 @@
+//dependancies
 const express = require('express')
 const { static, response } = require('express')
 const bodyParser = require('body-parser')
 const request=require('request');
+const path=require('path');
+const { Console } = require('console');
 
 const app = express()
 const port = 3000
 
-app.use(static("public")) //for static css and js
-app.use(bodyParser.urlencoded({ extended: false })) //to parse body string
-app.set("view engine","ejs"); //for dynamic content
+//paths
+const publicPath=path.join(__dirname,'../public')
+const viewsPath=path.join(__dirname,'../views');
 
+app.use(static(publicPath)) //for static css and js
+app.use(bodyParser.urlencoded({ extended: false })) //to parse body string
+
+//view engine
+app.set("view engine","ejs"); //for dynamic content
+app.set("views",viewsPath);
+
+//variables
 var location="https://api.weatherbit.io/v2.0/current?,IN&key=a87e76bd1d654e758325702ad0886d41&city=";
 var city="";
 var country="";
@@ -33,11 +44,12 @@ app.post('/location',({body:responseBody},res)=>{
     city=responseBody.city.toLowerCase();
     country=responseBody.country;
     location=location+city+','+country;
-    request(location,(error,{body})=>{
-        data=JSON.parse(body);
-        if(data["error"]!=undefined){
+    request(location,(error,response)=>{
+        if(error || response.body.length===0){
             res.redirect("/error");
-        }else{
+        }
+        else{
+            data=JSON.parse(response["body"]);
             city=(data["data"][0]["city_name"]);
             weather=(data["data"][0]["weather"]["description"]);
             temp=(data["data"][0]["temp"]);
