@@ -12,8 +12,8 @@ const port = 3000
 //paths
 const publicPath=path.join(__dirname,'../public')
 const viewsPath=path.join(__dirname,'../views');
-
 app.use(static(publicPath)) //for static css and js
+
 app.use(bodyParser.urlencoded({ extended: false })) //to parse body string
 
 //view engine
@@ -25,7 +25,6 @@ var location="https://api.weatherbit.io/v2.0/current?,IN&key=a87e76bd1d654e75832
 var city="";
 var country="";
 var temp=0.0;
-var city="";
 var weather="";
 
 app.get('/', (req, res)=>{
@@ -40,10 +39,12 @@ app.get('/weather',(req,res)=>{
     })
 })
 
-app.post('/location',({body:responseBody},res)=>{
-    city=responseBody.city.toLowerCase();
-    country=responseBody.country;
-    location=location+city+','+country;
+app.post('/location',(req,res)=>{
+    //parsing body variables
+    city=req.body.city.toLowerCase();
+    country=req.body.country;
+    location +=city+','+country;
+    //api request
     request(location,(error,response)=>{
         if(error || response.body.length===0){
             res.redirect("/error");
@@ -62,4 +63,4 @@ app.get("/error",(req,res)=>{
     res.render("error");
 })
 
-app.listen(port, () => console.log(`Server is running!`))
+app.listen(port, () => console.log(`Server is running on http://localhost:3000/`))

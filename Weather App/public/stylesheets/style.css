@@ -1,4 +1,29 @@
-body{
+.submit{
+    cursor: pointer;
+    border: 1px solid #039be5;
+    background: white;
+    color: #039be5;
+    padding: 8px;
+    font-weight: 600;
+    font-size: x-large;
+    padding: 10px;
+}
+
+.home{
+    margin-left: 50px;
+}
+
+#country{
+    font-size: 20px;
+    color: black;
+}
+
+h5{
+    background: white;
+    color: #039be5;
+}
+
+.dark{
     background-color: black;
-    color: white;
+    color: #039be5;    
 }
