@@ -7,7 +7,7 @@ const path=require('path');
 const { Console } = require('console');
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 //paths
 const publicPath=path.join(__dirname,'../public')
@@ -21,11 +21,12 @@ app.set("view engine","ejs"); //for dynamic content
 app.set("views",viewsPath);
 
 //variables
-var location="https://api.weatherbit.io/v2.0/current?,IN&key=a87e76bd1d654e758325702ad0886d41&city=";
+var location="http://api.weatherstack.com/current?access_key=688f71630c400096e1cbbfa2ad8996c0&query=";
 var city="";
 var country="";
 var temp=0.0;
 var weather="";
+var icon="";
 
 app.get('/', (req, res)=>{
     res.render("home");
@@ -35,7 +36,8 @@ app.get('/weather',(req,res)=>{
     res.render("weather",{
         weather:weather,
         temp:temp,
-        city:city
+        city:city,
+        icon:icon
     })
 })
 
@@ -43,17 +45,18 @@ app.post('/location',(req,res)=>{
     //parsing body variables
     city=req.body.city.toLowerCase();
     country=req.body.country;
-    location +=city+','+country;
+    location +=city;
     //api request
     request(location,(error,response)=>{
-        if(error || response.body.length===0){
+        data=JSON.parse(response["body"]);
+        if(error || data["success"]===false){
             res.redirect("/error");
         }
         else{
-            data=JSON.parse(response["body"]);
-            city=(data["data"][0]["city_name"]);
-            weather=(data["data"][0]["weather"]["description"]);
-            temp=(data["data"][0]["temp"]);
+            city=(data["location"]["name"])+", "+(data["location"]["region"])+", "+(data["location"]["country"]);
+            weather=(data["current"]["weather_descriptions"][0]);
+            temp=(data["current"]["temperature"]);
+            icon=(data["current"]["weather_icons"][0]);
             res.redirect('/weather');
         }
     });
@@ -63,4 +66,4 @@ app.get("/error",(req,res)=>{
     res.render("error");
 })
 
-app.listen(port, () => console.log(`Server is running on http://localhost:3000/`))
+app.listen(port, () => console.log(`Server is running on http://localhost:`+port))
